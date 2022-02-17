@@ -386,8 +386,6 @@ defmodule Absinthe.Language.Render do
   end
 
   defp arguments(args) do
-    any_descriptions? = Enum.any?(args, &(Map.has_key?(&1, :description) && &1.description))
-
     group(
       glue(
         nest(
@@ -395,9 +393,9 @@ defmodule Absinthe.Language.Render do
             glue(
               "(",
               "",
-              render_list(args, ", ")
+              render_list(args)
             ),
-            any_descriptions?
+            force_unfit?(args)
           ),
           2,
           :break
@@ -445,6 +443,14 @@ defmodule Absinthe.Language.Render do
     )
   end
 
+  defp multiline(docs, true) do
+    force_unfit(docs)
+  end
+
+  defp multiline(docs, false) do
+    docs
+  end
+
   defp render_list(items, separator \\ line()) do
     splitter =
       items
@@ -458,5 +464,9 @@ defmodule Absinthe.Language.Render do
       item, :doc_nil -> render(item)
       item, acc -> concat([render(item)] ++ splitter ++ [acc])
     end)
+  end
+
+  defp force_unfit?(args) do
+    Enum.any?(args, &(Map.has_key?(&1, :description) && &1.description)) or length(args) > 1
   end
 end
