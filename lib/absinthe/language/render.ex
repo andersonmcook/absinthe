@@ -331,13 +331,7 @@ defmodule Absinthe.Language.Render do
   end
 
   defp variable_definitions(definitions) do
-    definitions = Enum.map(definitions, &render(&1))
-
-    concat([
-      "(",
-      join(definitions, ", "),
-      ")"
-    ])
+    arguments(definitions)
   end
 
   defp field_definition(field) do
@@ -441,14 +435,6 @@ defmodule Absinthe.Language.Render do
         "}"
       )
     )
-  end
-
-  defp multiline(docs, true) do
-    force_unfit(docs)
-  end
-
-  defp multiline(docs, false) do
-    docs
   end
 
   defp render_list(items, separator \\ line()) do

@@ -48,7 +48,10 @@ defmodule Absinthe.Schema.SdlRenderTest do
         times: Int = 10
       ): [Category!]!
       posts: Post
-      search(limit: Int, sort: SorterInput!): [SearchResult]
+      search(
+        limit: Int
+        sort: SorterInput!
+      ): [SearchResult]
       defaultBooleanArg(boolean: Boolean = false): String
       defaultInputArg(input: ComplexInput = {foo: "bar"}): String
       defaultListArg(things: [String] = ["ThisThing"]): [String]

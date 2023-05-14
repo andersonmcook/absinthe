@@ -103,8 +103,16 @@ defmodule Absinthe.Language.RenderTest do
 
     test "for variables" do
       assert_rendered("""
-      query ($id: ID, $mult: Int = 6, $list: [Int!]! = [1, 2], $customScalar: CustomScalar!) {
-        times(base: 4, multiplier: $mult)
+      query (
+        $id: ID
+        $mult: Int = 6
+        $list: [Int!]! = [1, 2]
+        $customScalar: CustomScalar!
+      ) {
+        times(
+          base: 4
+          multiplier: $mult
+        )
       }
       """)
     end
@@ -226,7 +234,10 @@ defmodule Absinthe.Language.RenderTest do
       times: Int = 10
     ): [Category!]!
     posts: Post
-    search(limit: Int, sort: SorterInput!): [SearchResult]
+    search(
+      limit: Int
+      sort: SorterInput!
+    ): [SearchResult]
     defaultBooleanArg(boolean: Boolean = false): String
     defaultInputArg(input: ComplexInput = { foo: "bar" }): String
     defaultListArg(things: [String] = ["ThisThing"]): [String]
